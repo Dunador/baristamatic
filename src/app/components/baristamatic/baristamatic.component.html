@@ -1,0 +1,24 @@
+<div class="container mx-auto p-2 w-4/5 h-screen bg-gray-300">
+  <div class="flex flex-row w-full h-16">
+    <div class="text-2xl mx-auto">Barista-Matic</div>
+  </div>
+  <div class="flex flex-row w-full h-16">
+    <div class="text-xl mx-auto h-16" *ngIf="isDispensing">Dispensing... Enjoy!</div>
+  </div>
+  <div class="flex flex-row">
+    <div class="flex flex-col">
+      <div><strong>Ingredients</strong></div>
+      <div *ngFor="let item of currentStock | keyvalue">
+        <strong>{{convertStringToReadable(item.key)}}</strong> - {{item.value}}
+      </div>
+    </div>
+    <div class="grid grid-cols-2 w-1/2 mx-auto">
+      <div class="m-2" *ngFor="let drink of drinkOptions">
+        <button class="bg-blue-500 disabled:bg-gray-400 enabled:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" [disabled]="!hasStock(drink) || isDispensing" (click)="dispenseDrink(drink)">{{drink.name}} - {{getDrinkPrice(drink) | currency: 'USD'}}</button>
+      </div>
+      <div class="col-span-2 m-2">
+        <button class="bg-blue-500 disabled:bg-gray-400 enabled:hover:bg-blue-700 text-white font-bold py-2 px-4 rounded w-full" [disabled]="isDispensing" (click)="refillIngredients()">Refill Ingredients</button>
+      </div>
+    </div>
+  </div>
+</div>
